@@ -649,6 +649,9 @@ TIDY_EXPORT ctmbstr     tidyLookupMessage( int errorNo );
 /** Parse markup in named file */
 TIDY_EXPORT int TIDY_CALL         tidyParseFile( TidyDoc tdoc, ctmbstr filename );
 
+/** Parse markup from a file handle (you close it) */
+TIDY_EXPORT int TIDY_CALL         tidyParseFileHandle( TidyDoc tdoc, FILE *fp );
+
 /** Parse markup from the standard input */
 TIDY_EXPORT int TIDY_CALL         tidyParseStdin( TidyDoc tdoc );
 

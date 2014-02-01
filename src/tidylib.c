@@ -846,6 +846,7 @@ int TIDY_CALL  tidyParseSource( TidyDoc tdoc, TidyInputSource* source )
 }
 
 
+
 int   tidyDocParseFile( TidyDocImpl* doc, ctmbstr filnam )
 {
 #ifdef _WIN32
@@ -884,11 +885,18 @@ int   tidyDocParseFile( TidyDocImpl* doc, ctmbstr filnam )
 #endif
 }
 
-int   tidyDocParseStdin( TidyDocImpl* doc )
+int   tidyDocParseFileHandle( TidyDocImpl* doc, FILE *fp)
 {
-    StreamIn* in = TY_(FileInput)( doc, stdin, cfg( doc, TidyInCharEncoding ));
+    StreamIn* in = TY_(FileInput)( doc, fp, cfg( doc, TidyInCharEncoding ));
     int status = TY_(DocParseStream)( doc, in );
     TY_(freeStreamIn)(in);
+    return status;
+}
+
+
+int   tidyDocParseStdin( TidyDocImpl* doc )
+{
+    int status = tidyDocParseFileHandle( doc, stdin);
     return status;
 }
 
