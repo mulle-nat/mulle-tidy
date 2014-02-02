@@ -244,22 +244,22 @@ int TY_(DecodeUTF8BytesToChar)( uint* c, uint firstByte, ctmbstr successorBytes,
     }
     else if ( inp )
     {
-        for ( i=0; i < bytes-1 && !inp->eof(inp->sourceData); ++i )
-        {
-            int b = inp->getByte( inp->sourceData );
-            buf[i] = (tmbchar) b;
-
-            /* End of data or illegal successor byte value */
-            if ( b == EOF || (buf[i] & 0xC0) != 0x80 )
-            {
-                hasError = yes;
-                bytes = i+1;
-                if ( b != EOF )
-                    inp->ungetByte( inp->sourceData, buf[i] );
-                break;
-            }
-            n = (n << 6) | (buf[i] & 0x3F);
-        }
+       for ( i=0; i < bytes-1; ++i )
+       {
+          int b = inp->getByte( inp->sourceData );
+          buf[i] = (tmbchar) b;
+          
+          /* End of data or illegal successor byte value */
+          if ( b == EOF || (buf[i] & 0xC0) != 0x80 )
+          {
+             hasError = yes;
+             bytes = i+1;
+             if ( b != EOF )
+                inp->ungetByte( inp->sourceData, b );
+             break;
+          }
+          n = (n << 6) | (buf[i] & 0x3F);
+       }
     }
     else if ( bytes > 1 )
     {
