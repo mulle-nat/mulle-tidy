@@ -80,6 +80,9 @@ struct _TidyDocImpl
     struct utimbuf      filetimes;
 #endif
     tmbstr              givenDoctype;
+   
+   // mulle additions
+   TidyParserDelegate   delegate;
 };
 
 

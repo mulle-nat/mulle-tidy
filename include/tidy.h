@@ -312,10 +312,23 @@ int main(int argc, char **argv )
 ** @{
 */
 
+typedef struct
+{
+   void    (*start_element)( TidyDoc tdoc, TidyNode nod, void *appData);
+   void    (*element_value_utf8_characters)( TidyDoc tdoc, void *s, size_t len, void *appData);
+   void    (*end_element)( TidyDoc tdoc, TidyNode nod, void *appData);
+  
+   void    (*other_element)( TidyDoc tdoc, TidyNode nod, void *appData);
+} TidyParserDelegate;
+
+
 TIDY_EXPORT TidyDoc TIDY_CALL     tidyCreate(void);
 TIDY_EXPORT TidyDoc TIDY_CALL     tidyCreateWithAllocator( TidyAllocator *allocator );
 TIDY_EXPORT void TIDY_CALL        tidyRelease( TidyDoc tdoc );
 
+TIDY_EXPORT void TIDY_CALL        tidySetParserDelegate( TidyDoc tdoc, TidyParserDelegate *delegate, size_t size);
+TIDY_EXPORT size_t TIDY_CALL      tidyGetParserDelegate( TidyDoc tdoc, TidyParserDelegate *delegate,
+                                                        size_t size);
 /** Let application store a chunk of data w/ each Tidy instance.
 **  Useful for callbacks.
 */

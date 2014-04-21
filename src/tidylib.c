@@ -23,6 +23,7 @@
 #include "tidy-int.h"
 #include "parser.h"
 #include "clean.h"
+#include "delegate.h"
 #include "gdoc.h"
 #include "config.h"
 #include "message.h"
@@ -144,7 +145,8 @@ TidyDocImpl* tidyDocCreate( TidyAllocator *allocator )
     TY_(InitAttrs)( doc );
     TY_(InitConfig)( doc );
     TY_(InitPrintBuf)( doc );
-
+    TY_(InitDelegate)( doc );
+    
     /* By default, wire tidy messages to standard error.
     ** Document input will be set by parsing routines.
     ** Document output will be set by pretty print routines.

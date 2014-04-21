@@ -22,3 +22,11 @@
 *.user
 *.suo
 *.sdf
+*.swp
+
+build/Intermediates
+build/Products
+mulle-agvtool/
+bin/mulle-agvtool
+project.xcworkspace/
+xcuserdata/

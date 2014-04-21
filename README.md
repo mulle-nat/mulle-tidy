@@ -1,38 +1,24 @@
-# HTML Tidy for HTML5 (experimental)
+# mulle-tidy
 
-This repo is an experimental fork of the code from [tidy.sourceforge.net][1].
-This source code in this version supports processing of HTML5 documents. The
-changes for HTML5 support started from a [patch developed by Björn Höhrmann][2].
+This is a fork of the HTML tidy project. It includes some code to make it useful as a HTML parser (callbacks).
 
-   [1]: http://tidy.sourceforge.net
 
-   [2]: http://lists.w3.org/Archives/Public/www-archive/2011Nov/0007.html
+## Installation
 
-For more information, see [w3c.github.com/tidy-html5][3]
+mulle-tidy is available through [Mulle kybernetiK](http://www.mulle-kybernetik.com), to install
+it simply add the following lines to your Podfile:
 
-   [3]: http://w3c.github.com/tidy-html5/
+    pod "mulle-tidy"
 
-## Building the tidy command-line tool
+and run this on the command line:
 
-For Linux/BSD/OSX platforms, you can build and install the `tidy` command-line
-tool from the source code using the following steps.
+    pod repo add Mulle-kybernetiK http://www.mulle-kybernetik.com/repositories/CocoaPodSpecs
 
-  1. `make -C build/gmake/`
+## Author
 
-  2. `make install -C build/gmake/`
+Nat!, nat@mulle-kybernetik.com
 
-Note that you will either need to run `make install` as root, or with `sudo make
-install`.
+## License
 
-## Building the libtidy shared library
+mulle-tidy is available under the MIT license. See the tidy.h file for more info.
 
-For Linux/BSD/OSX platforms, you can build and install the `tidylib` shared
-library (for use in building other applications) from the source code using the
-following steps.
-
-  1. sh build/gnuauto/setup.sh && ./configure && make
-
-  2. make install
-
-Note that you will either need to run `make install` as root, or with `sudo make
-install`.

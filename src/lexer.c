@@ -2025,7 +2025,7 @@ void TY_(UngetToken)( TidyDocImpl* doc )
 */
 static Node* GetTokenFromStream( TidyDocImpl* doc, GetTokenMode mode );
 
-Node* TY_(GetToken)( TidyDocImpl* doc, GetTokenMode mode )
+static Node* GetToken( TidyDocImpl* doc, GetTokenMode mode )
 {
     Lexer* lexer = doc->lexer;
 
@@ -2066,6 +2066,31 @@ Node* TY_(GetToken)( TidyDocImpl* doc, GetTokenMode mode )
     }
 
     return GetTokenFromStream( doc, mode );
+}
+
+/*
+ * (nat) first try, it might be nicer to do the start/end tags in the parser
+ */
+Node* TY_(GetToken)( TidyDocImpl* doc, GetTokenMode mode )
+{
+   Node  *node;
+   Bool  memo;
+   
+   memo = doc->lexer->pushed;
+   node = GetToken( doc, mode);
+   if( ! node || memo)
+      return( node);
+   
+   switch( node->type)
+   {
+      case TextNode    : (doc->delegate.element_value_utf8_characters)( (TidyDoc) doc, &doc->lexer->lexbuf[ node->start], node->end - node->start, doc->appData); break;
+      case StartTag    : (doc->delegate.start_element)( (TidyDoc) doc, (TidyNode) node, doc->appData); break;
+      case StartEndTag : (doc->delegate.start_element)( (TidyDoc) doc, (TidyNode) node, doc->appData);
+      case EndTag      : (doc->delegate.end_element)( (TidyDoc) doc, (TidyNode) node, doc->appData); break;
+
+      default          : (doc->delegate.other_element)( (TidyDoc) doc, (TidyNode) node, doc->appData);
+   }
+   return( node);
 }
 
 static Node* GetTokenFromStream( TidyDocImpl* doc, GetTokenMode mode )
